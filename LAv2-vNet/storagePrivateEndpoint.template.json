@@ -121,7 +121,7 @@
             "apiVersion": "2017-05-10",
             "name": "PrivateDns",
             "dependsOn": [
-                "privateEndpoint"
+                "[parameters('privateEndpointName')]"
             ],
             "properties": {
                 "mode": "Incremental",

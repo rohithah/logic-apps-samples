@@ -1,7 +1,7 @@
 {
     "variables": {
-        "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
-        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameter.json"
+        "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json?token=AA43EVXMOGDQFDV65PJB5GTAAXQKW",
+        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json?token=AA43EVSOWV2DPAQC6XMZW7DAAXRJO"
     },
     "resources": [
         {

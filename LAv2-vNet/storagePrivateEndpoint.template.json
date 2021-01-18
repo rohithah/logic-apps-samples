@@ -130,11 +130,16 @@
                     "contentVersion": "1.0.0.0",
                     "resources": [
                         {
+                            "type": "Microsoft.Network/privateDnsZones",
+                            "apiVersion": "2018-09-01",
+                            "name": "privatelink.blob.core.windows.net"
+                        },
+                        {
                             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
                             "apiVersion": "2018-09-01",
                             "name": "[concat(string('privatelink.blob.core.windows.net'), '/', parameters('storageAccountName'))]",
                             "location": "global",
-                            "dependsOn": [],
+                            "dependsOn": ["privatelink.blob.core.windows.net"],
                             "properties": {
                                 "virtualNetwork": {
                                     "id": "[variables('vnetId')]"

@@ -20,6 +20,6 @@ steps:
     location: 'West US 2'
     templateLocation: 'Linked artifact'
     csmFile: 'LAv2-vNet/vnet.template.json'
-    overrideParameters: '-projectName LAv2vNet -linkedTemplateUri https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json'
+    csmParametersFile: 'LAv2-vNet/vnet.parameters.json'
     deploymentMode: 'Incremental'
-    deploymentName: 'DeployPipelineTemplate'
+    deploymentName: 'DeployPipelineTemplate''

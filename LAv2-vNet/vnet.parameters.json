@@ -31,9 +31,6 @@
         "subnet1_name": {
             "value": "private-links"
         },
-        "privateLinkSubnet": {
-            "value": "private-links"
-        },
         "subnet1_addressRange": {
             "value": "172.29.1.0/24"
         },
@@ -48,6 +45,9 @@
         },
         "subnet3_addressRange": {
             "value": "172.29.3.0/24"
+        },
+        "privateLinkSubnet": {
+            "value": "private-links"
         },
         "ddosProtectionPlanEnabled": {
             "value": false

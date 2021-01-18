@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "privateEndpointConnectionId":"[resourceId('Microsoft.Network/privateEndpoints', concat('privateLinkServiceConnections/', parameters('privateEndpointConnectionName')))]",
+        "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
         "privateLinkServiceId":"[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]", 
         "privateEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateEndpointName'))]",
         "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
@@ -150,7 +150,6 @@
                             "properties": {
                                 "mode": "Incremental",
                                 "templatelink": {
-                                    "contentVersion": "1.0.0.0",
                                     "uri": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
                                 },
                                 "parameters": {
@@ -158,7 +157,7 @@
                                         "value": "[string('privatelink.blob.core.windows.net')]"
                                     },
                                     "privateEndpointNicResourceId": {
-                                        "value": "[reference('private-blob-endpoin_f0477cc2-efcd-4031-80d1-21730809a08c').outputs.networkInterfaceId.value]"
+                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id.value]"
                                     },
                                     "nicRecordsTemplateUri": {
                                         "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
@@ -167,56 +166,14 @@
                                         "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
                                     },
                                     "uniqueId": {
-                                        "value": "f0477cc2efcd403180d121730809a08d"
-                                    },
-                                    "existingRecords": {
-                                        "value": {
-                                            "workflowprivateendpoint": {
-                                                "fqdn": "workflowprivateendpoint.privatelink.blob.core.windows.net.",
-                                                "ttl": 3600,
-                                                "aRecords": [
-                                                    {
-                                                        "ipv4Address": "172.28.1.5"
-                                                    }
-                                                ],
-                                                "isAutoRegistered": false
-                                            },
-                                            "workflowruntime1": {
-                                                "fqdn": "workflowruntime1.privatelink.blob.core.windows.net.",
-                                                "ttl": 3600,
-                                                "aRecords": [
-                                                    {
-                                                        "ipv4Address": "10.0.2.5"
-                                                    }
-                                                ],
-                                                "isAutoRegistered": false
-                                            },
-                                            "workflowsainvnet": {
-                                                "fqdn": "workflowsainvnet.privatelink.blob.core.windows.net.",
-                                                "ttl": 3600,
-                                                "aRecords": [
-                                                    {
-                                                        "ipv4Address": "10.0.2.4"
-                                                    }
-                                                ],
-                                                "isAutoRegistered": false
-                                            }
-                                        }
+                                        "value": "[uniqueString(concat(parameters('storageAccountName'), 'blob'))]"
                                     }
                                 }
                             }
                         }
                     ]
                 }
-            },
-            "subscriptionId": "[string('80d4fe69-c95b-4dd2-a938-9250f1c8ab03')]",
-            "resourceGroup": "[string('rohithah.workflow.apps')]"
+            }
         }
-    ],
-    "outputs": {
-        "networkInterfaceId": {
-            "type": "String",
-            "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
-        }
-    }
+    ]
 }

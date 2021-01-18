@@ -65,9 +65,7 @@
             "tags": {},
             "properties": {
                 "addressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('addressSpaces')]"
-                    ]
+                    "addressPrefixes": "[parameters('addressSpaces')]"
                 },
                 "subnets": [
                     {

@@ -19,7 +19,6 @@ steps:
     resourceGroupName: 'LogicAppsVnet'
     location: 'West US 2'
     templateLocation: 'Linked artifact'
-    csmFile: 'LAv2-vNet/vnet.template.json'
-    csmParametersFile: 'LAv2-vNet/vnet.parameters.json'
+    csmFile: 'LAv2-vNet/azuredeploy.json'
     deploymentMode: 'Incremental'
     deploymentName: 'DeployPipelineTemplate'

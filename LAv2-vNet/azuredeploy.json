@@ -5,8 +5,8 @@
     "variables": {
         "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
         "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json",
-        "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
-        "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json"
+        "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.template.json",
+        "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.parameters.json"
     },
     "resources": [
         {

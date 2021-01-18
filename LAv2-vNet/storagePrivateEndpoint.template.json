@@ -157,7 +157,7 @@
                                         "value": "[string('privatelink.blob.core.windows.net')]"
                                     },
                                     "privateEndpointNicResourceId": {
-                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id.value]"
+                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
                                     },
                                     "nicRecordsTemplateUri": {
                                         "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"

@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageAccountName": {
-            "value": "contosoappstate1"
+            "value": "contosoappstate"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
         },        
         "storageAccountKind": {
-            "value": "Standard_LRS"
+            "value": "StorageV2"
         },
         "storageAccountAccessTier": {
             "value": "Hot"

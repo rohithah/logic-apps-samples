@@ -1,0 +1,222 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "privateEndpointConnectionId":"[resourceId('Microsoft.Network/privateEndpoints', concat('privateLinkServiceConnections/', parameters('privateEndpointConnectionName')))]",
+        "privateLinkServiceId":"[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]", 
+        "privateEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateEndpointName'))]",
+        "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
+        "vnetId":"[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]"
+    },
+    "parameters": {
+        "storageAccountName":{
+            "type": "String"
+        },
+        "vnetName":{
+            "type": "String"
+        },
+        "subnetName":{
+            "type": "String"
+        },
+        "privateEndpointName": {
+            "type": "String"
+        },
+        "privateEndpointConnectionName": {
+            "type": "String"
+        },
+        "privateEndpointApiVersion": {
+            "type": "String"
+        },
+        "storageAccountType": {
+            "type": "String"
+        },
+        "storageAccountKind": {
+            "type": "String"
+        },
+        "storageAccountAccessTier": {
+            "type": "String"
+        },
+        "storageAccountMinimumTlsVersion": {
+            "type": "String"
+        },
+        "storageAccountSupportsHttpsTrafficOnly": {
+            "type": "Bool"
+        },
+        "storageAccountAllowBlobPublicAccess": {
+            "type": "Bool"
+        },
+        "storageAccountAllowSharedKeyAccess": {
+            "type": "Bool"
+        },
+        "storageAccountNetworkAclsBypass": {
+            "type": "String"
+        },
+        "storageAccountNetworkAclsDefaultAction": {
+            "type": "String"
+        },
+        "groupId": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        },
+        "tags": {
+            "type": "Object"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[parameters('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "sku": {
+                "name": "[parameters('storageAccountType')]"
+            },
+            "kind": "[parameters('storageAccountKind')]",
+            "properties": {
+                "accessTier": "[parameters('storageAccountAccessTier')]",
+                "minimumTlsVersion": "[parameters('storageAccountMinimumTlsVersion')]",
+                "supportsHttpsTrafficOnly": "[parameters('storageAccountSupportsHttpsTrafficOnly')]",
+                "allowBlobPublicAccess": "[parameters('storageAccountAllowBlobPublicAccess')]",
+                "allowSharedKeyAccess": "[parameters('storageAccountAllowSharedKeyAccess')]",
+                "networkAcls": {
+                    "bypass": "[parameters('storageAccountNetworkAclsBypass')]",
+                    "defaultAction": "[parameters('storageAccountNetworkAclsDefaultAction')]",
+                    "ipRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2019-04-01",
+            "name": "privateEndpoint",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('storageAccountName')]"
+            ],
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "privateLinkServiceConnections": [
+                    {
+                        "id": "[variables('privateEndpointConnectionId')]",
+                        "name": "[parameters('privateEndpointConnectionName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[variables('privateLinkServiceId')]",
+                            "groupIds": [
+                                "[parameters('groupId')]"
+                            ]
+                        }
+                    }
+                ],
+                "manualPrivateLinkServiceConnections": [],
+                "subnet": {
+                    "id": "[variables('subnetId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "PrivateDns",
+            "dependsOn": [
+                "privateEndpoint"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(string('privatelink.blob.core.windows.net'), '/', parameters('storageAccountName'))]",
+                            "location": "global",
+                            "dependsOn": [],
+                            "properties": {
+                                "virtualNetwork": {
+                                    "id": "[variables('vnetId')]"
+                                },
+                                "registrationEnabled": false
+                            }
+                        },
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "EndpointDnsRecords",
+                            "type": "Microsoft.Resources/deployments",
+                            "dependsOn": [],
+                            "properties": {
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "contentVersion": "1.0.0.0",
+                                    "uri": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "[string('privatelink.blob.core.windows.net')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[reference('private-blob-endpoin_f0477cc2-efcd-4031-80d1-21730809a08c').outputs.networkInterfaceId.value]"
+                                    },
+                                    "nicRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
+                                    },
+                                    "ipConfigRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
+                                    },
+                                    "uniqueId": {
+                                        "value": "f0477cc2efcd403180d121730809a08d"
+                                    },
+                                    "existingRecords": {
+                                        "value": {
+                                            "workflowprivateendpoint": {
+                                                "fqdn": "workflowprivateendpoint.privatelink.blob.core.windows.net.",
+                                                "ttl": 3600,
+                                                "aRecords": [
+                                                    {
+                                                        "ipv4Address": "172.28.1.5"
+                                                    }
+                                                ],
+                                                "isAutoRegistered": false
+                                            },
+                                            "workflowruntime1": {
+                                                "fqdn": "workflowruntime1.privatelink.blob.core.windows.net.",
+                                                "ttl": 3600,
+                                                "aRecords": [
+                                                    {
+                                                        "ipv4Address": "10.0.2.5"
+                                                    }
+                                                ],
+                                                "isAutoRegistered": false
+                                            },
+                                            "workflowsainvnet": {
+                                                "fqdn": "workflowsainvnet.privatelink.blob.core.windows.net.",
+                                                "ttl": 3600,
+                                                "aRecords": [
+                                                    {
+                                                        "ipv4Address": "10.0.2.4"
+                                                    }
+                                                ],
+                                                "isAutoRegistered": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "subscriptionId": "[string('80d4fe69-c95b-4dd2-a938-9250f1c8ab03')]",
+            "resourceGroup": "[string('rohithah.workflow.apps')]"
+        }
+    ],
+    "outputs": {
+        "networkInterfaceId": {
+            "type": "String",
+            "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
+        }
+    }
+}

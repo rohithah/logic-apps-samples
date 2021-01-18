@@ -31,6 +31,9 @@
         "subnet1_name": {
             "value": "private-links"
         },
+        "privateLinkSubnet": {
+            "value": "private-links"
+        },
         "subnet1_addressRange": {
             "value": "172.29.1.0/24"
         },

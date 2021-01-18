@@ -91,7 +91,7 @@
         {
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2019-04-01",
-            "name": "privateEndpoint",
+            "name": "[parameters('privateEndpointName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[parameters('storageAccountName')]"

@@ -4,7 +4,9 @@
     "parameters":{},
     "variables": {
         "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
-        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json"
+        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json",
+        "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
+        "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json"
     },
     "resources": [
         {
@@ -14,12 +16,24 @@
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
-                    "uri": "[variables('vnetTemplateLink')]",
-                    "contentVersion": "1.0.0.0"
+                    "uri": "[variables('vnetTemplateLink')]"
                 },
                 "parametersLink": {
-                    "uri": "[variables('vnetParameterLink')]",
-                    "contentVersion": "1.0.0.0"
+                    "uri": "[variables('vnetParameterLink')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2015-01-01",
+            "name": "deploymentStorage",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('deploymentStorageTemplateLink')]"
+                },
+                "parametersLink": {
+                    "uri": "[variables('deploymentStorageParameterLink')]"
                 }
             }
         }

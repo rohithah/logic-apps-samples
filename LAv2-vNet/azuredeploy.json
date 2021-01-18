@@ -1,0 +1,24 @@
+{
+    "variables": {
+        "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
+        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameter.json"
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-01-01",
+            "name": "vnet",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetTemplateLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parametersLink": {
+                    "uri": "[variables('vnetParameterLink')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        }
+    ]
+}

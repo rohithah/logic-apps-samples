@@ -7,8 +7,8 @@
         "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json",
         "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.template.json",
         "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.parameters.json",
-        "storagePrivateEndpointTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint..template.json",
-        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint..parameters.json"
+        "storagePrivateEndpointTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.template.json",
+        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.parameters.json"
     },
     "resources": [
         {

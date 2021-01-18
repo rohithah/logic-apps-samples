@@ -172,6 +172,9 @@
                                     },
                                     "uniqueId": {
                                         "value": "[uniqueString(concat(parameters('storageAccountName'), 'blob'))]"
+                                    },
+                                    "existingRecords": {
+                                        "value": {}
                                     }
                                 }
                             }

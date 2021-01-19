@@ -138,7 +138,7 @@
                         {
                             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
                             "apiVersion": "2018-09-01",
-                            "name": "privatelink.blob.core.windows.net-link",
+                            "name": "[concat(string('privatelink.blob.core.windows.net'), '/', parameters('storageAccountName'))]",
                             "location": "global",
                             "dependsOn": ["privatelink.blob.core.windows.net"],
                             "properties": {
@@ -152,7 +152,7 @@
                             "apiVersion": "2017-05-10",
                             "name": "EndpointDnsRecords",
                             "type": "Microsoft.Resources/deployments",
-                            "dependsOn": ["privatelink.blob.core.windows.net-link"],
+                            "dependsOn": ["[concat(string('privatelink.blob.core.windows.net'), '/', parameters('storageAccountName'))]"],
                             "properties": {
                                 "mode": "Incremental",
                                 "templatelink": {

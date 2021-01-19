@@ -2,9 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
-        "privateLinkServiceId":"[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]", 
-        "privateEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateEndpointName'))]",
+        "privateLinkServiceId":"[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]",
+        "privateBlobEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateBlobEndpointConnectionName'))]",
+        "privateBlobEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateBlobEndpointName'))]",
+        "privateTableEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateTableEndpointConnectionName'))]",
+        "privateTableEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateTableEndpointName'))]",
+        "privateQueueEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateQueueEndpointConnectionName'))]",
+        "privateQueueEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateQueueEndpointName'))]",
         "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
         "vnetId":"[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]"
     },
@@ -18,10 +22,22 @@
         "subnetName":{
             "type": "String"
         },
-        "privateEndpointName": {
+        "privateBlobEndpointName": {
             "type": "String"
         },
-        "privateEndpointConnectionName": {
+        "privateBlobEndpointConnectionName": {
+            "type": "String"
+        },
+        "privateTableEndpointName": {
+            "type": "String"
+        },
+        "privateTableEndpointConnectionName": {
+            "type": "String"
+        },        
+        "privateQueueEndpointName": {
+            "type": "String"
+        },
+        "privateQueueEndpointConnectionName": {
             "type": "String"
         },
         "privateEndpointApiVersion": {
@@ -52,9 +68,6 @@
             "type": "String"
         },
         "storageAccountNetworkAclsDefaultAction": {
-            "type": "String"
-        },
-        "groupId": {
             "type": "String"
         },
         "location": {
@@ -91,7 +104,7 @@
         {
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2019-04-01",
-            "name": "[parameters('privateEndpointName')]",
+            "name": "[parameters('privateBlobEndpointName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[parameters('storageAccountName')]"
@@ -100,12 +113,12 @@
             "properties": {
                 "privateLinkServiceConnections": [
                     {
-                        "id": "[variables('privateEndpointConnectionId')]",
-                        "name": "[parameters('privateEndpointConnectionName')]",
+                        "id": "[variables('privateBlobEndpointConnectionId')]",
+                        "name": "[parameters('privateBlobEndpointConnectionName')]",
                         "properties": {
                             "privateLinkServiceId": "[variables('privateLinkServiceId')]",
                             "groupIds": [
-                                "[parameters('groupId')]"
+                                "blob"
                             ]
                         }
                     }
@@ -119,9 +132,9 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "name": "PrivateDns",
+            "name": "BlobPrivateDns",
             "dependsOn": [
-                "[parameters('privateEndpointName')]"
+                "[parameters('privateBlobEndpointName')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -150,7 +163,7 @@
                         },
                         {
                             "apiVersion": "2017-05-10",
-                            "name": "EndpointDnsRecords",
+                            "name": "BlobEndpointDnsRecords",
                             "type": "Microsoft.Resources/deployments",
                             "dependsOn": ["privatelink.blob.core.windows.net"],
                             "properties": {
@@ -163,7 +176,7 @@
                                         "value": "[string('privatelink.blob.core.windows.net')]"
                                     },
                                     "privateEndpointNicResourceId": {
-                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
+                                        "value": "[reference(variables('privateBlobEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
                                     },
                                     "nicRecordsTemplateUri": {
                                         "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
@@ -173,6 +186,198 @@
                                     },
                                     "uniqueId": {
                                         "value": "[uniqueString(concat(parameters('storageAccountName'), 'blob'))]"
+                                    },
+                                    "existingRecords": {
+                                        "value": {}
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('privateTableEndpointName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('storageAccountName')]"
+            ],
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "privateLinkServiceConnections": [
+                    {
+                        "id": "[variables('privateTableEndpointConnectionId')]",
+                        "name": "[parameters('privateTableEndpointConnectionName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[variables('privateLinkServiceId')]",
+                            "groupIds": [
+                                "table"
+                            ]
+                        }
+                    }
+                ],
+                "manualPrivateLinkServiceConnections": [],
+                "subnet": {
+                    "id": "[variables('subnetId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "TablePrivateDns",
+            "dependsOn": [
+                "[parameters('privateTableEndpointName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/privateDnsZones",
+                            "apiVersion": "2018-09-01",
+                            "name": "privatelink.table.core.windows.net",
+                            "location": "global"
+                        },
+                        {
+                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(string('privatelink.table.core.windows.net'), '/', parameters('storageAccountName'))]",
+                            "location": "global",
+                            "dependsOn": ["privatelink.table.core.windows.net"],
+                            "properties": {
+                                "virtualNetwork": {
+                                    "id": "[variables('vnetId')]"
+                                },
+                                "registrationEnabled": false
+                            }
+                        },
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "TableEndpointDnsRecords",
+                            "type": "Microsoft.Resources/deployments",
+                            "dependsOn": ["privatelink.table.core.windows.net"],
+                            "properties": {
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "uri": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "[string('privatelink.table.core.windows.net')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[reference(variables('privateTableEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
+                                    },
+                                    "nicRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
+                                    },
+                                    "ipConfigRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
+                                    },
+                                    "uniqueId": {
+                                        "value": "[uniqueString(concat(parameters('storageAccountName'), 'table'))]"
+                                    },
+                                    "existingRecords": {
+                                        "value": {}
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('privateQueueEndpointName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('storageAccountName')]"
+            ],
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "privateLinkServiceConnections": [
+                    {
+                        "id": "[variables('privateQueueEndpointConnectionId')]",
+                        "name": "[parameters('privateQueueEndpointConnectionName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[variables('privateLinkServiceId')]",
+                            "groupIds": [
+                                "queue"
+                            ]
+                        }
+                    }
+                ],
+                "manualPrivateLinkServiceConnections": [],
+                "subnet": {
+                    "id": "[variables('subnetId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "QueuePrivateDns",
+            "dependsOn": [
+                "[parameters('privateQueueEndpointName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/privateDnsZones",
+                            "apiVersion": "2018-09-01",
+                            "name": "privatelink.queue.core.windows.net",
+                            "location": "global"
+                        },
+                        {
+                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(string('privatelink.queue.core.windows.net'), '/', parameters('storageAccountName'))]",
+                            "location": "global",
+                            "dependsOn": ["privatelink.queue.core.windows.net"],
+                            "properties": {
+                                "virtualNetwork": {
+                                    "id": "[variables('vnetId')]"
+                                },
+                                "registrationEnabled": false
+                            }
+                        },
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "QueueEndpointDnsRecords",
+                            "type": "Microsoft.Resources/deployments",
+                            "dependsOn": ["privatelink.queue.core.windows.net"],
+                            "properties": {
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "uri": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "[string('privatelink.queue.core.windows.net')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[reference(variables('privateQueueEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
+                                    },
+                                    "nicRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
+                                    },
+                                    "ipConfigRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
+                                    },
+                                    "uniqueId": {
+                                        "value": "[uniqueString(concat(parameters('storageAccountName'), 'queue'))]"
                                     },
                                     "existingRecords": {
                                         "value": {}

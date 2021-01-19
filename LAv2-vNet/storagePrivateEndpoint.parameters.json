@@ -38,17 +38,26 @@
         "subnetName": {
             "value": "private-links"
         },
-        "privateEndpointName": {
+        "privateBlobEndpointName": {
             "value": "private-blob-endpoint"
         },
-        "privateEndpointConnectionName": {
+        "privateBlobEndpointConnectionName": {
             "value": "private-blob-endpoint-connection"
+        },        
+        "privateTableEndpointName": {
+            "value": "private-table-endpoint"
+        },
+        "privateTableEndpointConnectionName": {
+            "value": "private-table-endpoint-connection"
+        },        
+        "privateQueueEndpointName": {
+            "value": "private-queue-endpoint"
+        },
+        "privateQueueEndpointConnectionName": {
+            "value": "private-queue-endpoint-connection"
         },
         "privateEndpointApiVersion": {
             "value": "2020-03-01"
-        },
-        "groupId": {
-            "value": "blob"
         },
         "location": {
             "value": "westus2"

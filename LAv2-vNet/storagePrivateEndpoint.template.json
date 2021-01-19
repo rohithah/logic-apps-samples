@@ -132,7 +132,8 @@
                         {
                             "type": "Microsoft.Network/privateDnsZones",
                             "apiVersion": "2018-09-01",
-                            "name": "privatelink.blob.core.windows.net"
+                            "name": "privatelink.blob.core.windows.net",
+                            "location": "global"
                         },
                         {
                             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",

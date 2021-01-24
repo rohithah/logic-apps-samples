@@ -15,10 +15,10 @@
             "value": "LogicAppFEPlan"
         },
         "contentStorageAccountName": {
-            "value": "contosodeployment1"
+            "value": "contosodeployments"
         },        
         "appStorageAccountName": {
-            "value": "contosodeployment1"
+            "value": "contosoappstate"
         },
         "use32BitWorkerProcess": {
             "value": true

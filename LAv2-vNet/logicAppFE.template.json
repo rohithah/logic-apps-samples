@@ -121,22 +121,22 @@
                     }
                 },
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('hostingPlanFEName'))]",
-                "clientAffinityEnabled": true,
-                "resources":
-                [
-                    {
-                        "type": "networkconfig",
-                        "apiVersion": "2018-11-01",
-                        "dependsOn": "[parameters('logicAppFEname')]",
-                        "name": "virtualNetwork",
-                        "location": "[parameters('location')]",
-                        "properties": {
-                            "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
-                            "swiftSupported": true
-                        }
+                "clientAffinityEnabled": true
+            },
+            "resources":
+            [
+                {
+                    "type": "networkconfig",
+                    "apiVersion": "2018-11-01",
+                    "dependsOn": "[parameters('logicAppFEname')]",
+                    "name": "virtualNetwork",
+                    "location": "[parameters('location')]",
+                    "properties": {
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
+                        "swiftSupported": true
                     }
-                ]
-            }
+                }
+            ]
         },
         {
             "type": "Microsoft.Web/serverfarms",

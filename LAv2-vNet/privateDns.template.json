@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "privateDnsName": {
+            "type": "String"
+        },
+        "privateDnsRecordName": {
+            "type": "String"
+        },
+        "privateEndpointNicResourceId": {
+            "type": "String"
+        }
+    },
+    "resources": [
+            {
+                "type": "Microsoft.Network/privateDnsZones/A",
+                "apiVersion": "2018-09-01",
+                "name": "[concat(parameters('privateDnsName'), '/', parameters('privateDnsRecordName'))]",
+                "location": "global",
+                "properties": {
+                    "ttl":10,
+                    "fqdn":"[concat(parameters('privateDnsRecordName'),'.', parameters('privateDnsName'))]",
+                    "aRecords":
+                    [
+                        {
+                            "ipv4Address": "[reference(parameters('privateEndpointNicResourceId'), '2019-07-01').properties.ipConfigurations[0].properties.privateIPAddress]"
+                        }
+                    ]
+                }
+            }
+    ]
+}

@@ -6,7 +6,8 @@
         "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
         "privateEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateEndpointName'))]",
         "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('privateLinkSubnetName'))]",
-        "vnetId":"[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]"
+        "vnetId":"[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
+        "privateDnsTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/privateDns.template.json"
     },
     "parameters": {
         "logicAppBEname": {
@@ -241,37 +242,49 @@
                             }
                         },
                         {
-                            "type": "Microsoft.Network/privateDnsZones/A",
-                            "apiVersion": "2018-09-01",
-                            "name": "[concat(string('privatelink.azurewebsites.net'), '/', parameters('logicAppBEname'))]",
-                            "location": "global",
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2017-05-10",
+                            "name": "[concat('NicDnsRecords-', 'website')]",
                             "dependsOn": ["privatelink.azurewebsites.net"],
                             "properties": {
-                                 "ttl":10,
-                                 "fqdn":"[concat(parameters('logicAppBEname'), string('.privatelink.azurewebsites.net'))]",
-                                "aRecords":
-                                [
-                                    {
-                                        "ipv4Address": "[reference(reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id, '2019-07-01').ipConfigurations[0].properties.privateIPAddress]"
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "uri": "[variables('privateDnsTemplateLink')]"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "privatelink.azurewebsites.net"
+                                    },
+                                    "privateDnsRecordName": {
+                                        "value": "[parameters('logicAppBEname')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
                                     }
-                                ]
+                                }
                             }
                         },
                         {
-                            "type": "Microsoft.Network/privateDnsZones/A",
-                            "apiVersion": "2018-09-01",
-                            "name": "[concat(string('privatelink.azurewebsites.net'), '/', parameters('logicAppBEname'), '.scm')]",
-                            "location": "global",
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2017-05-10",
+                            "name": "[concat('NicDnsRecords-', 'websiteScm')]",
                             "dependsOn": ["privatelink.azurewebsites.net"],
                             "properties": {
-                                 "ttl":10,
-                                 "fqdn":"[concat(parameters('logicAppBEname'), '.scm', string('.privatelink.azurewebsites.net'))]",
-                                "aRecords":
-                                [
-                                    {
-                                        "ipv4Address": "[reference(reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id, '2019-07-01').ipConfigurations[0].properties.privateIPAddress]"
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "uri": "[variables('privateDnsTemplateLink')]"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "privatelink.azurewebsites.net"
+                                    },
+                                    "privateDnsRecordName": {
+                                        "value": "[concat(parameters('logicAppBEname'), '.scm')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
                                     }
-                                ]
+                                }
                             }
                         }
                     ]

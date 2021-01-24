@@ -19,8 +19,7 @@
             "tags": {},
             "properties": {
                 "Flow_Type": "Redfield",
-                "Application_Type": "web",
-                "WorkspaceResourceId": "[resourceId('microsoft.operationalinsights/workspaces', concat('defaultworkspace-', uniqueString(parameters('name'))))]"
+                "Application_Type": "web"
             }
         }
     ]

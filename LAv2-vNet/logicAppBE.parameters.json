@@ -50,7 +50,7 @@
         "privateEndpointName": {
             "value": "LogicAppBE-PrivateEndpoint"
         },
-        "privateEndpointName": {
+        "privateEndpointConnectionName": {
             "value": "LogicAppBE-PrivateEndpointConnection"
         }
     }

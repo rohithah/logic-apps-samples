@@ -89,14 +89,30 @@
                         "name": "[parameters('subnet2_name')]",
                         "properties": {
                             "addressPrefix": "[parameters('subnet2_addressRange')]",
-                            "privateEndpointNetworkPolicies":"[if(equals(parameters('privateLinkSubnet'), parameters('subnet2_name')), 'Disabled', 'Enabled')]"
+                            "privateEndpointNetworkPolicies":"[if(equals(parameters('privateLinkSubnet'), parameters('subnet2_name')), 'Disabled', 'Enabled')]",
+                            "delegations":[
+                                {
+                                    "name":"delegation",
+                                    "properties":{
+                                        "servieName":"Microsoft.Web/serverfarms"
+                                    }
+                                }
+                            ]
                         }
                     },
                     {
                         "name": "[parameters('subnet3_name')]",
                         "properties": {
                             "addressPrefix": "[parameters('subnet3_addressRange')]",
-                            "privateEndpointNetworkPolicies":"[if(equals(parameters('privateLinkSubnet'), parameters('subnet3_name')), 'Disabled', 'Enabled')]"
+                            "privateEndpointNetworkPolicies":"[if(equals(parameters('privateLinkSubnet'), parameters('subnet3_name')), 'Disabled', 'Enabled')]",
+                            "delegations":[
+                                {
+                                    "name":"delegation",
+                                    "properties":{
+                                        "servieName":"Microsoft.Web/serverfarms"
+                                    }
+                                }
+                            ]
                         }
                     }
                 ],

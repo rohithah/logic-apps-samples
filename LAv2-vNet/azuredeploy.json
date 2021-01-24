@@ -74,7 +74,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "applicationStorage",
+            "name": "logicAppFE",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": ["deploymentStorage", "vnet", "applicationStorage", "appInsight"],
             "properties": {

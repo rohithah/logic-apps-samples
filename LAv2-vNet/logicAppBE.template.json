@@ -207,11 +207,19 @@
                     "type": "privateDnsZoneGroups",
                     "apiVersion": "2019-04-01",
                     "name":"default",
+                    "location": "[parameters('location')]",
                     "dependsOn": [
                         "[parameters('privateEndpointName')]"
                     ],
                     "properties":{
-                        "privateDnsZoneId" : "[resourceId('Microsoft.Network/privateDnsZones/', 'privatelink.azurewebsites.net')]"
+                        "privateDnsZoneConfigs": [
+                            {
+                                "name": "privatelink-azurewebsites-net",
+                                "properties": {
+                                    "privateDnsZoneId" : "[resourceId('Microsoft.Network/privateDnsZones/', 'privatelink.azurewebsites.net')]"
+                                }
+                            }
+                        ]
                     }
                 }
             ]

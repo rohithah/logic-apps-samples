@@ -106,6 +106,14 @@
                         {
                             "name": "FUNCTIONS_V2_COMPATIBILITY_MODE",
                             "value": "true"
+                        },
+                        {
+                            "name": "WEBSITE_VNET_ROUTE_ALL",
+                            "value": "1"
+                        },
+                        {
+                            "name": "WEBSITE_DNS_SERVER",
+                            "value": "168.63.129.16"
                         }
                     ],
                     "use32BitWorkerProcess": "[parameters('use32BitWorkerProcess')]",

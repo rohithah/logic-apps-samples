@@ -14,12 +14,6 @@
         "hostingPlanFEName": {
             "value": "LogicAppFEPlan"
         },
-        "serverFarmResourceGroup": {
-            "value": "rohithah-vnet-template"
-        },
-        "alwaysOn": {
-            "value": false
-        },
         "contentStorageAccountName": {
             "value": "contosodeployment1"
         },        

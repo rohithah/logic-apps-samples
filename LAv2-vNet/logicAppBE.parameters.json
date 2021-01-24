@@ -42,7 +42,10 @@
             "value": "ContosoVNET"
         },
         "subnetName": {
-            "value": "App1"
+            "value": "App2"
+        },
+        "privateLinkSubnetName": {
+            "value": "private-links"
         },
         "privateEndpointName": {
             "value": "LogicAppBE-PrivateEndpoint"

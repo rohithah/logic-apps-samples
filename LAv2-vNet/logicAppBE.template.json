@@ -4,7 +4,7 @@
     "variables": {
         "privateLinkServiceId":"[resourceId('Microsoft.Storage/Web',parameters('logicAppBEname'))]",
         "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
-        "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
+        "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('privateLinkSubnetName'))]",
     },
     "parameters": {
         "logicAppBEname": {
@@ -47,6 +47,9 @@
             "type": "String"
         },
         "subnetName": {
+            "type": "String"
+        },
+        "privateLinkSubnetName": {
             "type": "String"
         },
         "privateEndpointName": {

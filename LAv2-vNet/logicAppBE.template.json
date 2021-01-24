@@ -252,7 +252,7 @@
                                 "aRecords":
                                 [
                                     {
-                                        "ipv4Address": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress]"
+                                        "ipv4Address": "[reference(reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id, '2019-07-01').ipConfigurations[0].properties.privateIPAddress]"
                                     }
                                 ]
                             }
@@ -269,7 +269,7 @@
                                 "aRecords":
                                 [
                                     {
-                                        "ipv4Address": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress]"
+                                        "ipv4Address": "[reference(reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id, '2019-07-01').ipConfigurations[0].properties.privateIPAddress]"
                                     }
                                 ]
                             }

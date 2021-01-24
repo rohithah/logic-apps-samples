@@ -11,8 +11,8 @@
         "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.parameters.json",
         "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.template.json",
         "appInsightParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.parameters.json",
-        "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.template.json",
-        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.parameters.json"
+        "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.template.json",
+        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.parameters.json"
     },
     "resources": [
         {

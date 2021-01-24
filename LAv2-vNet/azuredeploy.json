@@ -8,7 +8,11 @@
         "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.template.json",
         "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.parameters.json",
         "storagePrivateEndpointTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.template.json",
-        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.parameters.json"
+        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.parameters.json",
+        "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.template.json",
+        "appInsightParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.parameters.json",
+        "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.template.json",
+        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.parameters.json"
     },
     "resources": [
         {
@@ -22,6 +26,20 @@
                 },
                 "parametersLink": {
                     "uri": "[variables('vnetParameterLink')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "appInsight",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('appInsightTemplateLink')]"
+                },
+                "parametersLink": {
+                    "uri": "[variables('appInsightParameterLink')]"
                 }
             }
         },
@@ -51,6 +69,21 @@
                 },
                 "parametersLink": {
                     "uri": "[variables('storagePrivateEndpointParameterLink')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "applicationStorage",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": ["deploymentStorage", "vnet", "applicationStorage", "appInsight"],
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('logicAppFETemplateLink')]"
+                },
+                "parametersLink": {
+                    "uri": "[variables('logicAppFEParameterLink')]"
                 }
             }
         }

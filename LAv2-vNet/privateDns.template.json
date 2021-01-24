@@ -24,7 +24,7 @@
                     "aRecords":
                     [
                         {
-                            "ipv4Address": "[reference(parameters('privateEndpointNicResourceId'), '2019-07-01').properties.ipConfigurations[0].properties.privateIPAddress]"
+                            "ipv4Address": "[reference(parameters('privateEndpointNicResourceId'), '2019-07-01').ipConfigurations[0].properties.privateIPAddress]"
                         }
                     ]
                 }

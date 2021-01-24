@@ -241,35 +241,37 @@
                             }
                         },
                         {
-                            "apiVersion": "2017-05-10",
-                            "name": "PrivateEndpointDnsRecords",
-                            "type": "Microsoft.Resources/deployments",
+                            "type": "Microsoft.Network/privateDnsZones/A",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(string('privatelink.azurewebsites.net'), '/', parameters('logicAppBEname'))]",
+                            "location": "global",
                             "dependsOn": ["privatelink.azurewebsites.net"],
                             "properties": {
-                                "mode": "Incremental",
-                                "templatelink": {
-                                    "uri": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
-                                },
-                                "parameters": {
-                                    "privateDnsName": {
-                                        "value": "[string('privatelink.azurewebsites.net')]"
-                                    },
-                                    "privateEndpointNicResourceId": {
-                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
-                                    },
-                                    "nicRecordsTemplateUri": {
-                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
-                                    },
-                                    "ipConfigRecordsTemplateUri": {
-                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
-                                    },
-                                    "uniqueId": {
-                                        "value": "[uniqueString(concat(parameters('logicAppBEname'), 'site'))]"
-                                    },
-                                    "existingRecords": {
-                                        "value": {}
+                                 "ttl":10,
+                                 "fqdn":"[concat(parameters('logicAppBEname'), string('.privatelink.azurewebsites.net'))]",
+                                "aRecords":
+                                [
+                                    {
+                                        "ipv4Address": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress]"
                                     }
-                                }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Network/privateDnsZones/A",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(string('privatelink.azurewebsites.net'), '/', parameters('logicAppBEname'), '.scm')]",
+                            "location": "global",
+                            "dependsOn": ["privatelink.azurewebsites.net"],
+                            "properties": {
+                                 "ttl":10,
+                                 "fqdn":"[concat(parameters('logicAppBEname'), '.scm', string('.privatelink.azurewebsites.net'))]",
+                                "aRecords":
+                                [
+                                    {
+                                        "ipv4Address": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress]"
+                                    }
+                                ]
                             }
                         }
                     ]

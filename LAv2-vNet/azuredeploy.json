@@ -12,7 +12,9 @@
         "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.template.json",
         "appInsightParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.parameters.json",
         "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.template.json",
-        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.parameters.json"
+        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.parameters.json",
+        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppBE.template.json",
+        "logicAppBEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppBE.parameters.json"
     },
     "resources": [
         {
@@ -69,6 +71,21 @@
                 },
                 "parametersLink": {
                     "uri": "[variables('storagePrivateEndpointParameterLink')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "logicAppBE",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": ["deploymentStorage", "vnet", "applicationStorage", "appInsight"],
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('logicAppBETemplateLink')]"
+                },
+                "parametersLink": {
+                    "uri": "[variables('logicAppBEParameterLink')]"
                 }
             }
         },

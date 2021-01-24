@@ -1,8 +1,13 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "variables": {
+        "privateLinkServiceId":"[resourceId('Microsoft.Storage/Web',parameters('logicAppBEname'))]",
+        "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
+        "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('subnetName'))]",
+    },
     "parameters": {
-        "logicAppFEname": {
+        "logicAppBEname": {
             "type": "String"
         },
         "appInsightName": {
@@ -11,7 +16,7 @@
         "location": {
             "type": "String"
         },
-        "hostingPlanFEName": {
+        "hostingPlanBEName": {
             "type": "String"
         },
         "contentStorageAccountName": {
@@ -43,16 +48,22 @@
         },
         "subnetName": {
             "type": "String"
+        },
+        "privateEndpointName": {
+            "type": "String"
+        },
+        "privateEndpointConnectionName": {
+            "type": "String"
         }
     },
     "resources": [
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
-            "name": "[parameters('logicAppFEname')]",
+            "name": "[parameters('logicAppBEname')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanFEName'))]"
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanBEName'))]"
             ],
             "tags": {},
             "kind": "functionapp,workflowapp",
@@ -60,7 +71,7 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "name": "[parameters('logicAppFEname')]",
+                "name": "[parameters('logicAppBEname')]",
                 "siteConfig": {
                     "appSettings": [
                         {
@@ -89,7 +100,7 @@
                         },
                         {
                             "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[concat(toLower(parameters('logicAppFEname')), 'a58b')]"
+                            "value": "[concat(toLower(parameters('logicAppBEname')), 'a58b')]"
                         },
                         {
                             "name": "WEBSITE_RUN_FROM_PACKAGE",
@@ -124,7 +135,7 @@
                         ]
                     }
                 },
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('hostingPlanFEName'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('hostingPlanBEName'))]",
                 "clientAffinityEnabled": true
             },
             "resources":
@@ -132,7 +143,7 @@
                 {
                     "type": "networkconfig",
                     "apiVersion": "2018-11-01",
-                    "dependsOn": ["[parameters('logicAppFEname')]"],
+                    "dependsOn": ["[parameters('logicAppBEname')]"],
                     "name": "virtualNetwork",
                     "location": "[parameters('location')]",
                     "properties": {
@@ -145,7 +156,7 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2018-11-01",
-            "name": "[parameters('hostingPlanFEName')]",
+            "name": "[parameters('hostingPlanBEName')]",
             "location": "[parameters('location')]",
             "dependsOn": [],
             "tags": {},
@@ -155,12 +166,52 @@
             },
             "kind": "",
             "properties": {
-                "name": "[parameters('hostingPlanFEName')]",
+                "name": "[parameters('hostingPlanBEName')]",
                 "workerSize": "[parameters('workerSize')]",
                 "workerSizeId": "[parameters('workerSizeId')]",
                 "numberOfWorkers": "[parameters('numberOfWorkers')]",
                 "maximumElasticWorkerCount": "20"
             }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('privateEndpointName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('logicAppBEname')]"
+            ],
+            "properties": {
+                "privateLinkServiceConnections": [
+                    {
+                        "id": "[variables('privateEndpointConnectionId')]",
+                        "name": "[parameters('privateEndpointConnectionName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[variables('privateLinkServiceId')]",
+                            "groupIds": [
+                                "sites"
+                            ]
+                        }
+                    }
+                ],
+                "manualPrivateLinkServiceConnections": [],
+                "subnet": {
+                    "id": "[variables('subnetId')]"
+                }
+            },
+            "resources": [
+                {
+                    "type": "privateDnsZoneGroups",
+                    "apiVersion": "2019-04-01",
+                    "name":"default",
+                    "dependsOn": [
+                        "[parameters('privateEndpointName')]"
+                    ],
+                    "properties":{
+                        "privateDnsZoneId" : "[resourceId('Microsoft.Network/privateDnsZones/', 'privatelink.azurewebsites.net')]"
+                    }
+                }
+            ]
         }
     ]
 }

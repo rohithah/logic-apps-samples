@@ -4,7 +4,9 @@
     "variables": {
         "privateLinkServiceId":"[resourceId('Microsoft.Web/sites',parameters('logicAppBEname'))]",
         "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
+        "privateEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateEndpointName'))]",
         "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('privateLinkSubnetName'))]",
+        "vnetId":"[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]"
     },
     "parameters": {
         "logicAppBEname": {
@@ -56,6 +58,9 @@
             "type": "String"
         },
         "privateEndpointConnectionName": {
+            "type": "String"
+        },
+        "privateEndpointApiVersion": {
             "type": "String"
         }
     },
@@ -201,28 +206,75 @@
                 "subnet": {
                     "id": "[variables('subnetId')]"
                 }
-            },
-            "resources": [
-                {
-                    "type": "privateDnsZoneGroups",
-                    "apiVersion": "2020-04-01",
-                    "name":"default",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[parameters('privateEndpointName')]"
-                    ],
-                    "properties":{
-                        "privateDnsZoneConfigs": [
-                            {
-                                "name": "privatelink-azurewebsites-net",
-                                "properties": {
-                                    "privateDnsZoneId" : "[resourceId('Microsoft.Network/privateDnsZones/', 'privatelink.azurewebsites.net')]"
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "LogicAppBEPrivateDns",
+            "dependsOn": [
+                "[parameters('privateEndpointName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/privateDnsZones",
+                            "apiVersion": "2018-09-01",
+                            "name": "privatelink.azurewebsites.net",
+                            "location": "global"
+                        },
+                        {
+                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(string('privatelink.azurewebsites.net'), '/', parameters('logicAppBEname'))]",
+                            "location": "global",
+                            "dependsOn": ["privatelink.azurewebsites.net"],
+                            "properties": {
+                                "virtualNetwork": {
+                                    "id": "[variables('vnetId')]"
+                                },
+                                "registrationEnabled": false
+                            }
+                        },
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "PrivateEndpointDnsRecords",
+                            "type": "Microsoft.Resources/deployments",
+                            "dependsOn": ["privatelink.azurewebsites.net"],
+                            "properties": {
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "uri": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "[string('privatelink.azurewebsites.net')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[reference(variables('privateEndpointId'),parameters('privateEndpointApiVersion')).networkInterfaces[0].id]"
+                                    },
+                                    "nicRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
+                                    },
+                                    "ipConfigRecordsTemplateUri": {
+                                        "value": "https://storage.hosting.portal.azure.net/storage/Content/4.13.393.167/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
+                                    },
+                                    "uniqueId": {
+                                        "value": "[uniqueString(concat(parameters('logicAppBEname'), 'site'))]"
+                                    },
+                                    "existingRecords": {
+                                        "value": {}
+                                    }
                                 }
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
-            ]
+            }
         }
     ]
 }

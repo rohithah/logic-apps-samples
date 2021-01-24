@@ -20,7 +20,6 @@
                 "location": "global",
                 "properties": {
                     "ttl":10,
-                    "fqdn":"[concat(parameters('privateDnsName'),'.', parameters('privateDnsRecordName'))]",
                     "aRecords":
                     [
                         {

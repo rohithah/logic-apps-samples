@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "logicAppFEname": {
-            "value": "LogicAppFE"
+            "value": "LogicAppFE00"
         },
         "appInsightName": {
             "value": "contosoAppInsight"

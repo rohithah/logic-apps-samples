@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "privateLinkServiceId":"[resourceId('Microsoft.Storage/Web',parameters('logicAppBEname'))]",
+        "privateLinkServiceId":"[resourceId('Microsoft.Web/sites',parameters('logicAppBEname'))]",
         "privateEndpointConnectionId":"[concat(resourceId('Microsoft.Network/privateEndpoints', 'privateLinkServiceConnections'), '/', parameters('privateEndpointConnectionName'))]",
         "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('privateLinkSubnetName'))]",
     },

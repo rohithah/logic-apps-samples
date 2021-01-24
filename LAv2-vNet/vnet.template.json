@@ -94,7 +94,7 @@
                                 {
                                     "name":"delegation",
                                     "properties":{
-                                        "servieName":"Microsoft.Web/serverFarms"
+                                        "serviceName":"Microsoft.Web/serverFarms"
                                     }
                                 }
                             ]
@@ -109,7 +109,7 @@
                                 {
                                     "name":"delegation",
                                     "properties":{
-                                        "servieName":"Microsoft.Web/serverFarms"
+                                        "serviceName":"Microsoft.Web/serverFarms"
                                     }
                                 }
                             ]

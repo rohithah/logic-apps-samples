@@ -7,7 +7,7 @@
         "privateEndpointId": "[resourceId('Microsoft.Network/privateEndpoints',parameters('privateEndpointName'))]",
         "subnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnetName'), parameters('privateLinkSubnetName'))]",
         "vnetId":"[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
-        "privateDnsTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/privateDns.template.json"
+        "privateDnsTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/privateDns.template.json"
     },
     "parameters": {
         "logicAppBEname": {

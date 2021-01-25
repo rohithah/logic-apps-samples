@@ -3,18 +3,18 @@
     "contentVersion": "1.0.0.0",
     "parameters":{},
     "variables": {
-        "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.template.json",
-        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/vnet.parameters.json",
-        "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.template.json",
-        "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/deploymentStorage.parameters.json",
-        "storagePrivateEndpointTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.template.json",
-        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/storagePrivateEndpoint.parameters.json",
-        "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.template.json",
-        "appInsightParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/appInsight.parameters.json",
-        "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.template.json",
-        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppFE.parameters.json",
-        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppBE.template.json",
-        "logicAppBEParameterLink": "https://raw.githubusercontent.com/rohithah/arm-templates/main/LAv2-vNet/logicAppBE.parameters.json"
+        "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/vnet.template.json",
+        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/vnet.parameters.json",
+        "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/deploymentStorage.template.json",
+        "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/deploymentStorage.parameters.json",
+        "storagePrivateEndpointTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/storagePrivateEndpoint.template.json",
+        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/storagePrivateEndpoint.parameters.json",
+        "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/appInsight.template.json",
+        "appInsightParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/appInsight.parameters.json",
+        "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppFE.template.json",
+        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppFE.parameters.json",
+        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppBE.template.json",
+        "logicAppBEParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppBE.parameters.json"
     },
     "resources": [
         {

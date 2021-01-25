@@ -18,9 +18,11 @@ on:
 #
 # 2. Change these variables for your configuration:
 env:
-  AZURE_FUNCTIONAPP_NAME: LogicAppFE00  # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'LAv2-vNet\src\Frontend'    # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '3.1.405'              # set this to the dotnet version to use
+  AZURE_LOGICAPPFE_NAME: LogicAppFE00
+  AZURE_LOGICAPPFE_PACKAGE_PATH: 'LAv2-vNet\src\Frontend'
+  AZURE_LOGICAPPBE_NAME: LogicAppBE00
+  AZURE_LOGICAPPBE_PACKAGE_PATH: 'LAv2-vNet\src\Backend'
+  DOTNET_VERSION: '3.1.405'
 
 jobs:
   build-and-deploy:
@@ -39,15 +41,30 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: 'Run dotnet'
+    - name: 'build logicapp-fe'
       shell: pwsh
       run: |
-        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        pushd './${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}'
         dotnet build --configuration Release --output ./output
         popd
-    - name: 'Run Azure Functions Action'
+
+    - name: 'build logicapp-be'
+      shell: pwsh
+      run: |
+        pushd './${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}'
+        dotnet build --configuration Release --output ./output
+        popd
+
+    - name: 'deploy logic-app-fe'
       uses: Azure/functions-action@v1
-      id: fa
+      id: logic-app-fe
       with:
-        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+        app-name: ${{ env.AZURE_LOGICAPPFE_NAME }}
+        package: '${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}/output'
+
+    - name: 'deploy logic-app-be'
+      uses: Azure/functions-action@v1
+      id: logic-app-be
+      with:
+        app-name: ${{ env.AZURE_LOGICAPPBE_NAME }}
+        package: '${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}/output'

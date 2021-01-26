@@ -377,10 +377,10 @@
                         "value": "[parameters('logicAppSku')]"
                     },
                     "skuCode": {
-                        "value": "[parameters('logicAppSku')]"
+                        "value": "[parameters('logicAppSkuCode')]"
                     },
                     "workerSize": {
-                        "value": "[parameters('logicAppSku')]"
+                        "value": "[parameters('logicAppWorkerSize')]"
                     },
                     "workerSizeId": {
                         "value": "[parameters('logicAppWorkerSizeId')]"

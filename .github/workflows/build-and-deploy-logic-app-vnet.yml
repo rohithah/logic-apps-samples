@@ -57,9 +57,10 @@ jobs:
         popd
 
     - name: 'upload logicapp-be'
-      - uses: actions/upload-artifact@v1
-          name: be-package
-          path: './${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}/logic-app-be-package.zip'
+      uses: actions/upload-artifact@v1
+      with:
+        name: be-package
+        path: './${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}/logic-app-be-package.zip'
 
     - name: 'deploy logic-app-fe'
       uses: Azure/functions-action@v1

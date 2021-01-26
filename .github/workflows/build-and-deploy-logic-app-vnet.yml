@@ -52,8 +52,18 @@ jobs:
       shell: pwsh
       run: |
         pushd './${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}'
-        dotnet build --configuration Release --output ./output
+        dotnet publish -c Release
         popd
+
+    - name: 'upload logicapp-be'
+      - uses: papeloto/action-zip@v1
+        with:
+          files: './${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}/bin/Release/netcoreapp3.1/publish'
+          recursive: true
+          dest: logic-app-be-package.zip
+      - uses: actions/upload-artifact@v1
+          name: artifacts
+          path: ${{ github.workspace }}/logic-app-be-package.zip
 
     - name: 'deploy logic-app-fe'
       uses: Azure/functions-action@v1
@@ -61,10 +71,3 @@ jobs:
       with:
         app-name: ${{ env.AZURE_LOGICAPPFE_NAME }}
         package: '${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}/output'
-
-    - name: 'deploy logic-app-be'
-      uses: Azure/functions-action@v1
-      id: logic-app-be
-      with:
-        app-name: ${{ env.AZURE_LOGICAPPBE_NAME }}
-        package: '${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}/output'

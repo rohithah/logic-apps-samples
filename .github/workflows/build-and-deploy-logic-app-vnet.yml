@@ -55,12 +55,14 @@ jobs:
         dotnet publish -c Release
         popd
 
-    - name: 'upload logicapp-be'
+    - name: 'zip logicapp-be'
       - uses: papeloto/action-zip@v1
         with:
           files: './${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}/bin/Release/netcoreapp3.1/publish'
           recursive: true
           dest: logic-app-be-package.zip
+
+    - name: 'upoad logicapp-be'
       - uses: actions/upload-artifact@v1
           name: artifacts
           path: ${{ github.workspace }}/logic-app-be-package.zip

@@ -1,0 +1,143 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westus2"
+        },
+        "virtualNetworkName": {
+            "value": "ContosoVNET"
+        },
+        "addressSpaces": {
+            "value": [
+                "172.29.0.0/16"
+            ]
+        },
+        "subnet0_name": {
+            "value": "default"
+        },
+        "subnet0_addressRange": {
+            "value": "172.29.0.0/24"
+        },
+        "subnet1_name": {
+            "value": "private-links"
+        },
+        "subnet1_addressRange": {
+            "value": "172.29.1.0/24"
+        },
+        "subnet2_name": {
+            "value": "App1"
+        },
+        "subnet2_addressRange": {
+            "value": "172.29.2.0/24"
+        },
+        "subnet3_name": {
+            "value": "App2"
+        },
+        "subnet3_addressRange": {
+            "value": "172.29.3.0/24"
+        },
+        "ddosProtectionPlanEnabled": {
+            "value": false
+        },
+        "privateLinkSubnet": {
+            "value": "private-links"
+        },
+        "appInsightName": {
+            "value": "contosoAppInsight"
+        },
+        "deploymentStorageAccountName": {
+            "value": "contosodeployments"
+        },
+        "applicationStorageAccountName": {
+            "value": "contosoappstate"
+        },
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "storageAccountKind": {
+            "value": "StorageV2"
+        },
+        "storageAccountAccessTier": {
+            "value": "Hot"
+        },
+        "storageAccountMinimumTlsVersion": {
+            "value": "TLS1_2"
+        },
+        "storageAccountSupportsHttpsTrafficOnly": {
+            "value": true
+        },
+        "storageAccountAllowBlobPublicAccess": {
+            "value": true
+        },
+        "storageAccountAllowSharedKeyAccess": {
+            "value": true
+        },
+        "storageAccountNetworkAclsBypass": {
+            "value": "AzureServices"
+        },
+        "storageAccountNetworkAclsDefaultAction": {
+            "value": "Allow"
+        },
+        "privateBlobEndpointName": {
+            "value": "private-blob-endpoint"
+        },
+        "privateBlobEndpointConnectionName": {
+            "value": "private-blob-endpoint-connection"
+        },
+        "privateTableEndpointName": {
+            "value": "private-table-endpoint"
+        },
+        "privateTableEndpointConnectionName": {
+            "value": "private-table-endpoint-connection"
+        },        
+        "privateQueueEndpointName": {
+            "value": "private-queue-endpoint"
+        },
+        "privateQueueEndpointConnectionName": {
+            "value": "private-queue-endpoint-connection"
+        },
+        "privateEndpointApiVersion": {
+            "value": "2020-03-01"
+        },
+        "logicAppBEname": {
+            "value": "LogicAppBE00"
+        },
+        "logicAppBEHostingPlanBEName": {
+            "value": "LogicAppBEPlan"
+        },
+        "logicAppUse32BitWorkerProcess": {
+            "value": true
+        },
+        "logicAppSku": {
+            "value": "ElasticPremium"
+        },
+        "logicAppSkuCode": {
+            "value": "EP1"
+        },
+        "logicAppWorkerSize": {
+            "value": "3"
+        },
+        "logicAppWorkerSizeId": {
+            "value": "3"
+        },
+        "logicAppNumberOfWorkers": {
+            "value": "1"
+        },
+        "logicAppBEPrivateEndpointName": {
+            "value": "LogicAppBE-PrivateEndpoint"
+        },
+        "logicAppBEPrivateEndpointConnectionName": {
+            "value": "LogicAppBE-PrivateEndpointConnection"
+        },
+        "logicAppFEname": {
+            "value": "LogicAppFE00"
+        },
+        "logicAppFEHostingPlanFEName": {
+            "value": "LogicAppFEPlan"
+        },
+        "tags": {
+            "value": {}
+        }
+    }
+}

@@ -1,20 +1,150 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters":{},
+    "parameters":{
+        "location": {
+            "type": "String"
+        },
+        "virtualNetworkName": {
+            "type": "String"
+        },
+        "addressSpaces": {
+            "type": "Array"
+        },
+        "subnet0_name": {
+            "type": "String"
+        },
+        "subnet0_addressRange": {
+            "type": "String"
+        },
+        "subnet1_name": {
+            "type": "String"
+        },
+        "subnet1_addressRange": {
+            "type": "String"
+        },
+        "subnet2_name": {
+            "type": "String"
+        },
+        "subnet2_addressRange": {
+            "type": "String"
+        },
+        "subnet3_name": {
+            "type": "String"
+        },
+        "subnet3_addressRange": {
+            "type": "String"
+        },
+        "ddosProtectionPlanEnabled": {
+            "type": "Bool"
+        },
+        "privateLinkSubnet": {
+            "type": "String"
+        },
+        "appInsightName": {
+            "type": "String"
+        },
+        "deploymentStorageAccountName": {
+            "type": "String"
+        },
+        "applicationStorageAccountName": {
+            "type": "String"
+        },
+        "storageAccountType": {
+            "type": "String"
+        },
+        "storageAccountKind": {
+            "type": "String"
+        },
+        "storageAccountAccessTier": {
+            "type": "String"
+        },
+        "storageAccountMinimumTlsVersion": {
+            "type": "String"
+        },
+        "storageAccountSupportsHttpsTrafficOnly": {
+            "type": "Bool"
+        },
+        "storageAccountAllowBlobPublicAccess": {
+            "type": "Bool"
+        },
+        "storageAccountAllowSharedKeyAccess": {
+            "type": "Bool"
+        },
+        "storageAccountNetworkAclsBypass": {
+            "type": "String"
+        },
+        "storageAccountNetworkAclsDefaultAction": {
+            "type": "String"
+        },
+        "privateBlobEndpointName": {
+            "type": "String"
+        },
+        "privateBlobEndpointConnectionName": {
+            "type": "String"
+        },
+        "privateTableEndpointName": {
+            "type": "String"
+        },
+        "privateTableEndpointConnectionName": {
+            "type": "String"
+        },        
+        "privateQueueEndpointName": {
+            "type": "String"
+        },
+        "privateQueueEndpointConnectionName": {
+            "type": "String"
+        },
+        "privateEndpointApiVersion": {
+            "type": "String"
+        },
+        "logicAppBEname": {
+            "type": "String"
+        },
+        "logicAppBEHostingPlanBEName": {
+            "type": "String"
+        },
+        "logicAppUse32BitWorkerProcess": {
+            "type": "Bool"
+        },
+        "logicAppSku": {
+            "type": "String"
+        },
+        "logicAppSkuCode": {
+            "type": "String"
+        },
+        "logicAppWorkerSize": {
+            "type": "String"
+        },
+        "logicAppWorkerSizeId": {
+            "type": "String"
+        },
+        "logicAppNumberOfWorkers": {
+            "type": "String"
+        },
+        "logicAppBEPrivateEndpointName": {
+            "type": "String"
+        },
+        "logicAppBEPrivateEndpointConnectionName": {
+            "type": "String"
+        },
+        "logicAppFEname": {
+            "type": "String"
+        },
+        "logicAppFEHostingPlanFEName": {
+            "type": "String"
+        },
+        "tags": {
+            "type": "String"
+        }
+    },
     "variables": {
         "vnetTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/vnet.template.json",
-        "vnetParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/vnet.parameters.json",
         "deploymentStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/deploymentStorage.template.json",
-        "deploymentStorageParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/deploymentStorage.parameters.json",
-        "storagePrivateEndpointTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/storagePrivateEndpoint.template.json",
-        "storagePrivateEndpointParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/storagePrivateEndpoint.parameters.json",
+        "applicationStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/applicationStorage.template.json",
         "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/appInsight.template.json",
-        "appInsightParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/appInsight.parameters.json",
         "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppFE.template.json",
-        "logicAppFEParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppFE.parameters.json",
-        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppBE.template.json",
-        "logicAppBEParameterLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppBE.parameters.json"
+        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppBE.template.json"
     },
     "resources": [
         {
@@ -26,8 +156,46 @@
                 "templateLink": {
                     "uri": "[variables('vnetTemplateLink')]"
                 },
-                "parametersLink": {
-                    "uri": "[variables('vnetParameterLink')]"
+                "parameters":{
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "addressSpaces": {
+                        "value": "[parameters('addressSpaces')]"
+                    },
+                    "subnet0_name": {
+                        "value": "[parameters('subnet0_name')]"
+                    },
+                    "subnet0_addressRange": {
+                        "value":  "[parameters('subnet0_addressRange')]"
+                    },
+                    "subnet1_name": {
+                        "value": "[parameters('subnet1_name')]"
+                    },
+                    "subnet1_addressRange": {
+                        "value": "[parameters('subnet1_addressRange')]"
+                    },
+                    "subnet2_name": {
+                        "value": "[parameters('subnet2_name')]"
+                    },
+                    "subnet2_addressRange": {
+                        "value": "[parameters('subnet2_addressRange')]"
+                    },
+                    "subnet3_name": {
+                        "value": "[parameters('subnet3_name')]"
+                    },
+                    "subnet3_addressRange": {
+                        "value": "[parameters('subnet3_addressRange')]"
+                    },
+                    "privateLinkSubnet": {
+                        "value": "[parameters('privateLinkSubnet')]"
+                    },
+                    "ddosProtectionPlanEnabled": {
+                        "value": "[parameters('ddosProtectionPlanEnabled')]"
+                    }
                 }
             }
         },
@@ -40,8 +208,13 @@
                 "templateLink": {
                     "uri": "[variables('appInsightTemplateLink')]"
                 },
-                "parametersLink": {
-                    "uri": "[variables('appInsightParameterLink')]"
+                "parameters":{
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "name": {
+                        "value": "[parameters('appInsightName')]"
+                    }
                 }
             }
         },
@@ -54,8 +227,40 @@
                 "templateLink": {
                     "uri": "[variables('deploymentStorageTemplateLink')]"
                 },
-                "parametersLink": {
-                    "uri": "[variables('deploymentStorageParameterLink')]"
+                "parameters":{
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "storageAccountName": {
+                        "value": "[parameters('deploymentStorageAccountName')]"
+                    },
+                    "accountType": {
+                        "value": "[parameters('storageAccountType')]"
+                    },
+                    "kind": {
+                        "value": "[parameters('storageAccountKind')]"
+                    },
+                    "accessTier": {
+                        "value": "[parameters('storageAccountAccessTier')]"
+                    },
+                    "minimumTlsVersion": {
+                        "value": "[parameters('storageAccountMinimumTlsVersion')]"
+                    },
+                    "supportsHttpsTrafficOnly": {
+                        "value": "[parameters('storageAccountSupportsHttpsTrafficOnly')]"
+                    },
+                    "allowBlobPublicAccess": {
+                        "value": "[parameters('storageAccountAllowBlobPublicAccess')]"
+                    },
+                    "allowSharedKeyAccess": {
+                        "value": "[parameters('storageAccountAllowSharedKeyAccess')]"
+                    },
+                    "networkAclsBypass": {
+                        "value": "[parameters('storageAccountNetworkAclsBypass')]"
+                    },
+                    "networkAclsDefaultAction": {
+                        "value": "[parameters('storageAccountNetworkAclsDefaultAction')]"
+                    }
                 }
             }
         },
@@ -67,10 +272,72 @@
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
-                    "uri": "[variables('storagePrivateEndpointTemplateLink')]"
+                    "uri": "[variables('applicationStorageTemplateLink')]"
                 },
-                "parametersLink": {
-                    "uri": "[variables('storagePrivateEndpointParameterLink')]"
+                "parameters": {
+                    "storageAccountName":{
+                        "value": "[parameters('applicationStorageAccountName')]"
+                    },
+                    "vnetName":{
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "subnetName":{
+                         "value": "[parameters('subnet1_name')]"
+                    },
+                    "privateBlobEndpointName": {
+                        "value": "[parameters('privateBlobEndpointName')]"
+                    },
+                    "privateBlobEndpointConnectionName": {
+                        "value": "[parameters('privateBlobEndpointConnectionName')]"
+                    },
+                    "privateTableEndpointName": {
+                        "value": "[parameters('privateTableEndpointName')]"
+                    },
+                    "privateTableEndpointConnectionName": {
+                        "value": "[parameters('privateTableEndpointConnectionName')]"
+                    },        
+                    "privateQueueEndpointName": {
+                        "value": "[parameters('privateQueueEndpointName')]"
+                    },
+                    "privateQueueEndpointConnectionName": {
+                        "value": "[parameters('privateQueueEndpointConnectionName')]"
+                    },
+                    "privateEndpointApiVersion": {
+                        "value": "[parameters('privateEndpointApiVersion')]"
+                    },
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
+                    },
+                    "storageAccountKind": {
+                        "value": "[parameters('storageAccountKind')]"
+                    },
+                    "storageAccountAccessTier": {
+                        "value": "[parameters('storageAccountAccessTier')]"
+                    },
+                    "storageAccountMinimumTlsVersion": {
+                        "value": "[parameters('storageAccountMinimumTlsVersion')]"
+                    },
+                    "storageAccountSupportsHttpsTrafficOnly": {
+                        "value": "[parameters('storageAccountSupportsHttpsTrafficOnly')]"
+                    },
+                    "storageAccountAllowBlobPublicAccess": {
+                        "value": "[parameters('storageAccountAllowBlobPublicAccess')]"
+                    },
+                    "storageAccountAllowSharedKeyAccess": {
+                        "value": "[parameters('storageAccountAllowSharedKeyAccess')]"
+                    },
+                    "storageAccountNetworkAclsBypass": {
+                        "value": "[parameters('storageAccountNetworkAclsBypass')]"
+                    },
+                    "storageAccountNetworkAclsDefaultAction": {
+                        "value": "[parameters('storageAccountNetworkAclsDefaultAction')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "tags": {
+                        "value": "[parameters('tags')]"
+                    }
                 }
             }
         },
@@ -84,8 +351,61 @@
                 "templateLink": {
                     "uri": "[variables('logicAppBETemplateLink')]"
                 },
-                "parametersLink": {
-                    "uri": "[variables('logicAppBEParameterLink')]"
+                "parameters": {
+                    "logicAppBEname": {
+                        "value": "[parameters('logicAppBEname')]"
+                    },
+                    "appInsightName": {
+                        "value": "[parameters('appInsightName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "hostingPlanBEName": {
+                        "value": "[parameters('logicAppBEHostingPlanBEName')]"
+                    },
+                    "contentStorageAccountName": {
+                        "value": "[parameters('deploymentStorageAccountName')]"
+                    },        
+                    "appStorageAccountName": {
+                        "value": "[parameters('applicationStorageAccountName')]"
+                    },
+                    "use32BitWorkerProcess": {
+                        "value": "[parameters('logicAppUse32BitWorkerProcess')]"
+                    },
+                    "sku": {
+                        "value": "[parameters('logicAppSku')]"
+                    },
+                    "skuCode": {
+                        "value": "[parameters('logicAppSku')]"
+                    },
+                    "workerSize": {
+                        "value": "[parameters('logicAppSku')]"
+                    },
+                    "workerSizeId": {
+                        "value": "[parameters('logicAppWorkerSizeId')]"
+                    },
+                    "numberOfWorkers": {
+                        "value": "[parameters('logicAppNumberOfWorkers')]"
+                    },
+                    "vnetName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "subnetName": {
+                        "value": "[parameters('subnet2_name')]"
+                    },
+                    "privateLinkSubnetName": {
+                         "value": "[parameters('subnet1_name')]"
+                    },
+                    "privateEndpointName": {
+                        "value": "[parameters('logicAppBEPrivateEndpointName')]"
+                    },
+                    "privateEndpointConnectionName": {
+                        "value": "[parameters('logicAppBEPrivateEndpointConnectionName')]"
+                    },
+                    "privateEndpointApiVersion": {
+                        "value": "[parameters('privateEndpointApiVersion')]"
+                    }
                 }
             }
         },
@@ -99,8 +419,49 @@
                 "templateLink": {
                     "uri": "[variables('logicAppFETemplateLink')]"
                 },
-                "parametersLink": {
-                    "uri": "[variables('logicAppFEParameterLink')]"
+                "parameters": {
+                    "logicAppFEname": {
+                         "value": "[parameters('logicAppFEname')]"
+                    },
+                    "appInsightName": {
+                        "value": "[parameters('appInsightName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "hostingPlanFEName": {
+                        "value": "[parameters('logicAppFEHostingPlanFEName')]"
+                    },
+                    "contentStorageAccountName": {
+                        "value": "[parameters('deploymentStorageAccountName')]"
+                    },        
+                    "appStorageAccountName": {
+                        "value": "[parameters('applicationStorageAccountName')]"
+                    },
+                    "use32BitWorkerProcess": {
+                        "value": "[parameters('logicAppUse32BitWorkerProcess')]"
+                    },
+                    "sku": {
+                        "value": "[parameters('logicAppSku')]"
+                    },
+                    "skuCode": {
+                        "value": "[parameters('logicAppSkuCode')]"
+                    },
+                    "workerSize": {
+                        "value": "[parameters('logicAppWorkerSize')]"
+                    },
+                    "workerSizeId": {
+                        "value": "[parameters('logicAppWorkerSizeId')]"
+                    },
+                    "numberOfWorkers": {
+                        "value": "[parameters('logicAppNumberOfWorkers')]"
+                    },
+                    "vnetName": {
+                        "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "subnetName": {
+                        "value": "[parameters('subnet3_name')]"
+                    }
                 }
             }
         }

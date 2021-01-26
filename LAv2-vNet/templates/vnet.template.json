@@ -8,17 +8,8 @@
         "virtualNetworkName": {
             "type": "String"
         },
-        "resourceGroup": {
-            "type": "String"
-        },
         "addressSpaces": {
             "type": "Array"
-        },
-        "ipv6Enabled": {
-            "type": "Bool"
-        },
-        "subnetCount": {
-            "type": "Int"
         },
         "subnet0_name": {
             "type": "String"
@@ -49,12 +40,6 @@
         },
         "privateLinkSubnet": {
             "type": "String"
-        },
-        "firewallEnabled": {
-            "type": "Bool"
-        },
-        "bastionEnabled": {
-            "type": "Bool"
         }
     },
     "variables": {},

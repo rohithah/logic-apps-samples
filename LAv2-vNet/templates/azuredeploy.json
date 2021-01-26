@@ -135,7 +135,7 @@
             "type": "String"
         },
         "tags": {
-            "type": "String"
+            "type": "Object"
         }
     },
     "variables": {

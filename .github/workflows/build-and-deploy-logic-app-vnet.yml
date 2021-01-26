@@ -53,19 +53,13 @@ jobs:
       run: |
         pushd './${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}'
         dotnet publish -c Release
+        powershell Compress-Archive -LiteralPath .\bin\Release\netcoreapp3.1\publish -DestinationPath .\logic-app-be-package.zip
         popd
 
-    - name: 'zip logicapp-be'
-      - uses: papeloto/action-zip@v1
-        with:
-          files: './${{ env.AZURE_LOGICAPPBE_PACKAGE_PATH }}/bin/Release/netcoreapp3.1/publish'
-          recursive: true
-          dest: logic-app-be-package.zip
-
-    - name: 'upoad logicapp-be'
+    - name: 'upload logicapp-be'
       - uses: actions/upload-artifact@v1
-          name: artifacts
-          path: ${{ github.workspace }}/logic-app-be-package.zip
+          name: be-package
+          path: './${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}/logic-app-be-package.zip'
 
     - name: 'deploy logic-app-fe'
       uses: Azure/functions-action@v1

@@ -3,11 +3,8 @@ name: build-and-deploy-logic-app-vnet
 on:
   workflow_dispatch:
     inputs:
-      subscriptionId:
-        description: 'SubscriptionId'
-        required: true
-      resourceGroupName:
-        description: 'Resource group name'
+      LogicAppFEName:
+        description: 'Name of the FE Logic App'
         required: true
 
 # CONFIGURATION
@@ -18,11 +15,7 @@ on:
 #
 # 2. Change these variables for your configuration:
 env:
-  AZURE_LOGICAPPFE_NAME: LogicAppFE00
   AZURE_LOGICAPPFE_PACKAGE_PATH: 'LAv2-vNet\src\Frontend'
-  AZURE_LOGICAPPBE_NAME: LogicAppBE00
-  AZURE_LOGICAPPBE_PACKAGE_PATH: 'LAv2-vNet\src\Backend'
-  DOTNET_VERSION: '3.1.405'
 
 jobs:
   build-and-deploy:
@@ -52,5 +45,5 @@ jobs:
       uses: Azure/functions-action@v1
       id: logic-app-fe
       with:
-        app-name: ${{ env.AZURE_LOGICAPPFE_NAME }}
+        app-name: ${{github.event.inputs.LogicAppFEName}}
         package: '${{ env.AZURE_LOGICAPPFE_PACKAGE_PATH }}/output'

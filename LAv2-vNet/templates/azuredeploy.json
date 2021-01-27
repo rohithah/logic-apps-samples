@@ -203,6 +203,7 @@
             "apiVersion": "2017-05-10",
             "name": "appInsight",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": ["vnet"],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {
@@ -222,6 +223,7 @@
             "apiVersion": "2017-05-10",
             "name": "deploymentStorage",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": ["vnet"],
             "properties": {
                 "mode": "incremental",
                 "templateLink": {

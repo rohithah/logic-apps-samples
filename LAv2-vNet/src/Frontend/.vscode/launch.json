@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Attach to ClearScript V8 on port 9222",
+            "type": "node",
+            "request": "attach",
+            "protocol": "inspector",
+            "address": "localhost",
+            "port": 9222
+        },
+        {
+            "name": "Attach to .NET Functions",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:azureLogicAppsV2.pickProcess}"
+        }
+    ]
+}

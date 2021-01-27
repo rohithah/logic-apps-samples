@@ -29,7 +29,8 @@
             "manual": {
                 "type": "Request",
                 "kind": "Http",
-                "inputs": {}
+                "inputs": {},
+                "splitOn":"@triggerbody()"
             }
         },
         "contentVersion": "1.0.0.0",

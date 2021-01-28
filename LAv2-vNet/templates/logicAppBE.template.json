@@ -112,10 +112,6 @@
                             "value": "[concat(toLower(parameters('logicAppBEname')), 'a58b')]"
                         },
                         {
-                            "name": "WEBSITE_RUN_FROM_PACKAGE",
-                            "value": "1"
-                        },
-                        {
                             "name": "APP_KIND",
                             "value": "workflowApp"
                         },

@@ -11,7 +11,7 @@ To test how the traffic flows between these two apps, the gateway workflow in Lo
 
 Use the following repos as template to create your own copies:
 * __logic-apps-samples__ contains the ARM templates and the LogicAppFE project and required github actions for deploying to azure.
-* __logicapps-vnet-sample__ contains the LogicAppBE project. This sits on a separate repo so that we can use App service GitHub integration for deploying as cli based deployment will not work since the kudu endpoint is now inside the vnet.
+* __logicapps-vnet-sample__ [repo](https://github.com/rohithah/logicapps-vnet-sample "LogicAppBE project") contains the LogicAppBE project. This sits on a separate repo so that we can use App service GitHub integration for deploying as cli based deployment will not work since the kudu endpoint is now inside the vnet.
 
 ## Provisioning resources ##
 
@@ -25,7 +25,7 @@ Use the following repos as template to create your own copies:
 * You can use the __build-and-deploy-logic-app-vnet__ action from actions tab to deploy the FE Logic app. You need to use the app name fro LogicAppFE app from your parameters file.
 
 ## Deploying the Logic App BE ##
-* Given the LogicAppBE is locked down behind a vNet, You cannot use the same action you used for LogicAppFE for deploying the LogicAppBE. We can use the Deployment center [integration with GitHub](https://docs.microsoft.com/en-us/azure/azure-functions/functions-continuous-deployment "Continuous deployment for Logic Apps preview") to have the azure pull the app and the deploy to our app which is inside the vNet.
+* Given the LogicAppBE is locked down behind a vNet, You cannot use the same action you used for LogicAppFE for deploying the LogicAppBE. We can use the Deployment center [integration with GitHub](https://docs.microsoft.com/en-us/azure/azure-functions/functions-continuous-deployment "Continuous deployment for Logic Apps preview") to have the azure pull the app and the deploy to our app which is inside the vNet. Make sure you use the 'External Git' as the source.
 
 ## Configuring the LogicAppFE to call Logic App BE ##
 There is one last step before our two apps are fully integrated. Get the callback url from the RequestHandler workflow from the LogicAppBE and set it as the value for __backendCallbackUrl__ in the LogicAppFE configurations. This completes setting up our application and we can invoke Gateway workflow in LogicAppFE with a public endpoint to call into the RequestHandler workflow in LogicAppBE which is completely locked down inside the vNet.

@@ -69,7 +69,7 @@
                         },
                         {
                             "name": "FUNCTIONS_WORKER_RUNTIME",
-                            "value": "dotnet"
+                            "value": "node"
                         },
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
@@ -98,10 +98,6 @@
                         {
                             "name": "APP_KIND",
                             "value": "workflowApp"
-                        },
-                        {
-                            "name": "FUNCTIONS_V2_COMPATIBILITY_MODE",
-                            "value": "true"
                         },
                         {
                             "name": "WEBSITE_VNET_ROUTE_ALL",

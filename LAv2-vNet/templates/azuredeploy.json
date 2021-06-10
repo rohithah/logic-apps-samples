@@ -144,7 +144,7 @@
         "applicationStorageTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/applicationStorage.template.json",
         "appInsightTemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/appInsight.template.json",
         "logicAppFETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppFE.template.json",
-        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/main/LAv2-vNet/templates/logicAppBE.template.json"
+        "logicAppBETemplateLink": "https://raw.githubusercontent.com/rohithah/logic-apps-samples/logic-apps-samples-msft/LAv2-vNet/templates/logicAppBE.template.json"
     },
     "resources": [
         {

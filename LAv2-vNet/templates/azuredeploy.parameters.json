@@ -98,10 +98,10 @@
             "value": "private-queue-endpoint-connection"
         },        
         "privateFileEndpointName": {
-            "value": "private-queue-endpoint"
+            "value": "private-file-endpoint"
         },
         "privateFileEndpointConnectionName": {
-            "value": "private-queue-endpoint-connection"
+            "value": "private-file-endpoint-connection"
         },
         "privateEndpointApiVersion": {
             "value": "2020-03-01"

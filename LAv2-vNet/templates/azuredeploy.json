@@ -94,6 +94,12 @@
         },
         "privateQueueEndpointConnectionName": {
             "type": "String"
+        },        
+        "privateFileEndpointName": {
+            "type": "String"
+        },
+        "privateFileEndpointConnectionName": {
+            "type": "String"
         },
         "privateEndpointApiVersion": {
             "type": "String"
@@ -303,6 +309,12 @@
                     },
                     "privateQueueEndpointConnectionName": {
                         "value": "[parameters('privateQueueEndpointConnectionName')]"
+                    },        
+                    "privateFileEndpointName": {
+                        "value": "[parameters('privateFileEndpointName')]"
+                    },
+                    "privateFileEndpointConnectionName": {
+                        "value": "[parameters('privateFileEndpointConnectionName')]"
                     },
                     "privateEndpointApiVersion": {
                         "value": "[parameters('privateEndpointApiVersion')]"

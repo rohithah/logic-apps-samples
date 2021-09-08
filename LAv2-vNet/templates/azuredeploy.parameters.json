@@ -47,10 +47,10 @@
             "value": "contosoAppInsight"
         },
         "deploymentStorageAccountName": {
-            "value": "contosodeployments98"
+            "value": "contosodeployments101"
         },
         "applicationStorageAccountName": {
-            "value": "contosoappstate98"
+            "value": "contosoappstate101"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
@@ -107,7 +107,7 @@
             "value": "2020-03-01"
         },
         "logicAppBEname": {
-            "value": "LogicAppBE98"
+            "value": "LogicAppBE101"
         },
         "logicAppBEHostingPlanBEName": {
             "value": "LogicAppBEPlan"
@@ -137,7 +137,7 @@
             "value": "LogicAppBE-PrivateEndpointConnection"
         },
         "logicAppFEname": {
-            "value": "LogicAppFE98"
+            "value": "LogicAppFE101"
         },
         "logicAppFEHostingPlanFEName": {
             "value": "LogicAppFEPlan"

@@ -92,14 +92,6 @@
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('appStorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('appStorageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
                         },
                         {
-                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('appStorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('contentStorageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
-                        },
-                        {
-                            "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[concat(toLower(parameters('logicAppFEname')), 'a58b')]"
-                        },
-                        {
                             "name": "APP_KIND",
                             "value": "workflowApp"
                         },
@@ -108,12 +100,12 @@
                             "value": "1"
                         },
                         {
-                            "name": "WEBSITE_DNS_SERVER",
-                            "value": "168.63.129.16"
+                            "name":"WEBSITE_RUN_FROM_PACKAGE",
+                            "value":"1"
                         },
                         {
-                            "name": "WEBSITE_CONTENTOVERVNET",
-                            "value": "1"
+                            "name": "WEBSITE_DNS_SERVER",
+                            "value": "168.63.129.16"
                         }
                     ],
                     "use32BitWorkerProcess": "[parameters('use32BitWorkerProcess')]",

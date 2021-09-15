@@ -21,5 +21,5 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: 'LAv2-vNet\templates\azuredeploy.json'
     csmParametersFile: 'LAv2-vNet\templates\azuredeploy.parameters.json'
-    overrideParameters: '-applicationStorageAccountName contosoappstate103 -deploymentStorageAccountName contosodeployments103 -logicAppFEname LogicAppFE103 -logicAppBEname LogicAppBE103'
+    overrideParameters: '-applicationStorageAccountName contosoappstate104 -deploymentStorageAccountName contosodeployments104 -logicAppFEname LogicAppFE104 -logicAppBEname LogicAppBE104'
     deploymentMode: 'Incremental'

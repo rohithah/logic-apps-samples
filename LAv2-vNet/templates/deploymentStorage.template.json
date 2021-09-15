@@ -59,7 +59,21 @@
                     "bypass": "[parameters('networkAclsBypass')]",
                     "defaultAction": "[parameters('networkAclsDefaultAction')]",
                     "ipRules": []
-                }
+                },
+                "virtualNetworkRules":[
+                    {
+                        "id":"/subscriptions/21196cdf-abb2-4697-9f73-feef0db7cb2a/resourceGroups/deployment-repro/providers/Microsoft.Network/virtualNetworks/ContosoVNET/subnets/App1"
+                    },
+                    {
+                        "id":"/subscriptions/21196cdf-abb2-4697-9f73-feef0db7cb2a/resourceGroups/deployment-repro/providers/Microsoft.Network/virtualNetworks/ContosoVNET/subnets/App2"
+                    },
+                    {
+                        "id":"/subscriptions/21196cdf-abb2-4697-9f73-feef0db7cb2a/resourceGroups/deployment-repro/providers/Microsoft.Network/virtualNetworks/ContosoVNET/subnets/default"
+                    },
+                    {
+                        "id":"/subscriptions/21196cdf-abb2-4697-9f73-feef0db7cb2a/resourceGroups/deployment-repro/providers/Microsoft.Network/virtualNetworks/ContosoVNET/subnets/private-links"
+                    }
+                ]
             }
         }
     ],

@@ -96,10 +96,6 @@
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('contentStorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('contentStorageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
                         },
                         {
-                            "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[concat(toLower(parameters('logicAppFEname')), 'a58b')]"
-                        },
-                        {
                             "name": "APP_KIND",
                             "value": "workflowApp"
                         },

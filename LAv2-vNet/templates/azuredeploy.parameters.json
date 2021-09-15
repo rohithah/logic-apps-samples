@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "value": "westus2"
+            "value": "eastus2"
         },
         "virtualNetworkName": {
             "value": "ContosoVNET"
@@ -47,10 +47,10 @@
             "value": "contosoAppInsight"
         },
         "deploymentStorageAccountName": {
-            "value": "contosodeployments101"
+            "value": "contosodeployments102"
         },
         "applicationStorageAccountName": {
-            "value": "contosoappstate101"
+            "value": "contosoappstate102"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
@@ -107,7 +107,7 @@
             "value": "2020-03-01"
         },
         "logicAppBEname": {
-            "value": "LogicAppBE101"
+            "value": "LogicAppBE102"
         },
         "logicAppBEHostingPlanBEName": {
             "value": "LogicAppBEPlan"
@@ -137,7 +137,7 @@
             "value": "LogicAppBE-PrivateEndpointConnection"
         },
         "logicAppFEname": {
-            "value": "LogicAppFE101"
+            "value": "LogicAppFE102"
         },
         "logicAppFEHostingPlanFEName": {
             "value": "LogicAppFEPlan"
